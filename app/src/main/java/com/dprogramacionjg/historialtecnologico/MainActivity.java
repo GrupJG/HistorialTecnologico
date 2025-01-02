@@ -1,6 +1,9 @@
 package com.dprogramacionjg.historialtecnologico;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,5 +23,28 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.icon_add) {
+            Toast.makeText(this, "Agregar", Toast.LENGTH_LONG).show();
+            return true;
+        }
+        if (id == R.id.icon_save) {
+            Toast.makeText(this, "Guardar", Toast.LENGTH_LONG).show();
+            return true;
+        }
+        if (id == R.id.icon_delete) {
+            Toast.makeText(this, "Eliminar", Toast.LENGTH_LONG).show();
+        }
+        else {
+            Toast.makeText(this, "Sin opccion", Toast.LENGTH_LONG).show();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
