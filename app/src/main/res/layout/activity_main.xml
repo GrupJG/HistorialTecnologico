@@ -44,14 +44,15 @@
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:textSize="38sp"
         android:layout_margin="10dp"
         android:layout_gravity="center_horizontal"
         android:text="@string/lista_de_contactos"/>
+
     <ListView
         android:id="@+id/lv_contactos"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 </LinearLayout>
