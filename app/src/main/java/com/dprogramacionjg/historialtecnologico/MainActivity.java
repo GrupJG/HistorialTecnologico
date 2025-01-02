@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
     private void inicializarFirebase() {
         FirebaseApp.initializeApp(this);
         firebaseDatabase = FirebaseDatabase.getInstance();
+        firebaseDatabase.setPersistenceEnabled(true);   // para que funcione sin internet
         databaseReference = firebaseDatabase.getReference();
     }
 
