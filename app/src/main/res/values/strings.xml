@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">HistorialTecnologico</string>
+    <string name="nombre">Nombre</string>
+    <string name="apellidos">Apellidos</string>
+    <string name="numerotelefonico">NumeroTelefonico</string>
+    <string name="correo">Correo</string>
+    <string name="lista_de_contactos">Lista de contactos</string>
 </resources>
