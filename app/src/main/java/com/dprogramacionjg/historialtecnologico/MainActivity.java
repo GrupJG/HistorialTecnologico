@@ -137,6 +137,9 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
             if (id == R.id.icon_delete) {
+                Persona p = new Persona();
+                p.setUid(personaSelected.getUid());
+                databaseReference.child("Persona").child(p.getUid()).removeValue();
                 Toast.makeText(this, "Eliminar", Toast.LENGTH_LONG).show();
                 lipiarCampos();
                 return true;
