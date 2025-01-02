@@ -53,13 +53,7 @@ public class Persona {
 
     @Override
     public String toString() {
-        return "Persona{" +
-                "Uid='" + Uid + '\'' +
-                ", Nombre='" + Nombre + '\'' +
-                ", Apellidos='" + Apellidos + '\'' +
-                ", NumeroTelefonico='" + NumeroTelefonico + '\'' +
-                ", Correo='" + Correo + '\'' +
-                '}';
+        return Nombre +" "+ Apellidos;
     }
 
 

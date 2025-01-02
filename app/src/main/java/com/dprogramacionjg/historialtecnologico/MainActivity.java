@@ -4,17 +4,17 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
 import com.dprogramacionjg.historialtecnologico.model.Persona;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
@@ -22,11 +22,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
+
+    Persona personaSelected;
 
 
 
@@ -56,9 +56,21 @@ public class MainActivity extends AppCompatActivity {
         eTApellidos = findViewById(R.id.et_apellidos);
         eTNumeroTelefonico = findViewById(R.id.et_numerotelefonico);
         eTCorreo = findViewById(R.id.et_correo);
+
         lVlista_contactos = findViewById(R.id.lv_contactos);
         inicializarFirebase();
         listarDatos();
+
+        lVlista_contactos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                personaSelected = (Persona) parent.getItemAtPosition(position);
+                eTNombre.setText(personaSelected.getNombre());
+                eTApellidos.setText(personaSelected.getApellidos());
+                eTNumeroTelefonico.setText(personaSelected.getNumeroTelefonico());
+                eTCorreo.setText(personaSelected.getCorreo());
+            }
+        });
 
 
     }
@@ -113,7 +125,14 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
             if (id == R.id.icon_save) {
-                Toast.makeText(this, "Guardar", Toast.LENGTH_LONG).show();
+                Persona p = new Persona();
+                p.setUid(personaSelected.getUid());
+                p.setNombre(eTNombre.getText().toString().trim());//para ignorar los espacios en blanco se usa el trim
+                p.setApellidos(eTApellidos.getText().toString().trim());
+                p.setNumeroTelefonico(eTNumeroTelefonico.getText().toString().trim());
+                p.setCorreo(eTCorreo.getText().toString().trim());
+                databaseReference.child("Persona").child(p.getUid()).setValue(p);
+                Toast.makeText(this, "Actualizar", Toast.LENGTH_LONG).show();
                 lipiarCampos();
                 return true;
             }
