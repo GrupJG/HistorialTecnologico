@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1041063885175",
+    "project_id": "historialtecnologico-b0836",
+    "storage_bucket": "historialtecnologico-b0836.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1041063885175:android:74e204bfc321b02a740972",
+        "android_client_info": {
+          "package_name": "com.dprogramacionjg.historialtecnologico"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOuCbzFmiZyP1mbTrpHCZCkAuhhbMQ0a8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
