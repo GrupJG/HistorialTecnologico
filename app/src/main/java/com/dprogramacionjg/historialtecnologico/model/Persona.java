@@ -2,11 +2,11 @@ package com.dprogramacionjg.historialtecnologico.model;
 
 public class Persona {
 
-    public String Uid;
-    public String Nombre;
-    public String Apellidos;
-    public String NumeroTelefonico;
-    public String Correo;
+    private String Uid;
+    private String Nombre;
+    private String Apellidos;
+    private String NumeroTelefonico;
+    private String Correo;
 
     public Persona() {
     }
@@ -61,4 +61,6 @@ public class Persona {
                 ", Correo='" + Correo + '\'' +
                 '}';
     }
+
+
 }

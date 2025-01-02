@@ -1,8 +1,10 @@
 package com.dprogramacionjg.historialtecnologico;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -13,11 +15,30 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.dprogramacionjg.historialtecnologico.model.Persona;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 
 public class MainActivity extends AppCompatActivity {
 
+    private List<Persona> listPerson = new ArrayList<Persona>();
+    ArrayAdapter<Persona> arrayAdapterPersona;
+
     EditText eTNombre, eTApellidos, eTNumeroTelefonico, eTCorreo;
     ListView lVlista_contactos;
+
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
+
 
 
     @Override
@@ -36,9 +57,35 @@ public class MainActivity extends AppCompatActivity {
         eTNumeroTelefonico = findViewById(R.id.et_numerotelefonico);
         eTCorreo = findViewById(R.id.et_correo);
         lVlista_contactos = findViewById(R.id.lv_contactos);
+        inicializarFirebase();
+        listarDatos();
+
 
     }
 
+    private void listarDatos() {
+        databaseReference.child("Persona").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                listPerson.clear();
+                for (DataSnapshot objSnaptshot : dataSnapshot.getChildren()){
+                    Persona p = objSnaptshot.getValue(Persona.class);
+                    listPerson.add(p);
+                    arrayAdapterPersona = new ArrayAdapter<Persona>(MainActivity.this, android.R.layout.simple_list_item_1, listPerson);
+                    lVlista_contactos.setAdapter(arrayAdapterPersona);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+
+    private void inicializarFirebase() {
+        FirebaseApp.initializeApp(this);
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference();
+    }
 
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -53,6 +100,13 @@ public class MainActivity extends AppCompatActivity {
             validacion();
         }else {
             if (id == R.id.icon_add) {
+                Persona p = new Persona();
+                p.setUid(UUID.randomUUID().toString());
+                p.setNombre(eTNombre.getText().toString());
+                p.setApellidos(eTApellidos.getText().toString());
+                p.setNumeroTelefonico(eTNumeroTelefonico.getText().toString());
+                p.setCorreo(eTCorreo.getText().toString());
+                databaseReference.child("Persona").child(p.getUid()).setValue(p);
                 Toast.makeText(this, "Agregar", Toast.LENGTH_LONG).show();
                 lipiarCampos();
                 return true;
